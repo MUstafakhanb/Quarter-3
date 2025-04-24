@@ -1,0 +1,9 @@
+[
+    {
+        "title": "learn python",
+        "author": "alice",
+        "year": 2023,
+        "genre": "coding",
+        "read_status": true
+    }
+]
