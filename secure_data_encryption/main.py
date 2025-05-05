@@ -130,27 +130,30 @@ elif choice == "Store Data":
             else:
                 st.error("All fields are required to fill.")
 
-# === data retieve data section ===
-elif choice == "Retieve Data":
+# === data retrieve section ===
+elif choice == "Retrieve Data":
     if not st.session_state.authenticated_user:
         st.warning("Please login first")
     else:
-        st.subheader("🔍 Retieve data")
-        user_data = stored_data.get(st.session_state.authenticated_user, {}).get("data",[])
+        st.subheader("🔍 Retrieve data")
+        user_data = stored_data.get(st.session_state.authenticated_user, {}).get("data", [])
 
         if not user_data:
             st.info("No Data Found!")
         else:
-            st.write("Encrypted Data Enteries:")
-            for i, item in enumerate (user_data):
-                st.code(item,language="text")
+            st.write("Encrypted Data Entries:")
+            for i, item in enumerate(user_data):
+                st.code(item, language="text")
 
             encrypted_input = st.text_area("Enter Encrypted Text")
-            passkey = st.text_input("Enter Passkey T Decrypt", type="password")
+            passkey = st.text_input("Enter Passkey To Decrypt", type="password")
 
             if st.button("Decrypt"):
-                result = decrypt_text(encrypted_input, passkey)
-                if result:
-                    st.success(f"Decrypted : {result}")
-                else:
-                    st.error(" ❌ Incorrect passkey or corrupted data.")
+                try:
+                    result = decrypt_text(encrypted_input, passkey)
+                    if result:
+                        st.success(f"Decrypted: {result}")
+                    else:
+                        st.error("❌ Incorrect passkey or corrupted data.")
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
